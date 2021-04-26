@@ -7,16 +7,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.model.Data;
+import com.model.Hero;
 import com.retrofitviewmodel.databinding.PhotoItemBinding;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Response;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
 
-    private ArrayList<Data> retroPhotos;
+    private ArrayList<Hero> retroPhotos;
 
-    public PhotoAdapter(ArrayList<Data> retroPhotos) {
+    public PhotoAdapter(ArrayList<Hero> retroPhotos) {
         this.retroPhotos = retroPhotos;
     }
 
@@ -29,11 +32,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
-        holder.binding.tvId.setText(String.valueOf(retroPhotos.get(position).getId()));
-        holder.binding.tvDesc.setText(retroPhotos.get(position).getCity());
+        Log.i( "onBindViewHolder: ",retroPhotos.get(position).getImageurl());
+        holder.binding.setHero(retroPhotos.get(position));
     }
 
-    public void notifyData(ArrayList<Data> retroPhotos) {
+    public void notifyData(ArrayList<Hero> retroPhotos) {
         this.retroPhotos = retroPhotos;
         Log.i("notifyData: ", retroPhotos.size() + "");
         notifyDataSetChanged();

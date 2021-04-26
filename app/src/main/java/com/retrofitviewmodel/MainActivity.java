@@ -8,9 +8,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.adapter.PhotoAdapter;
-import com.model.ResponsePojo;
+import com.model.Hero;
 import com.model.MainActivityViewModel;
 import com.retrofitviewmodel.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -40,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.getMovieListObserver().observe(this, new Observer<Response<ResponsePojo>>() {
+        mainActivityViewModel.getMovieListObserver().observe(this, new Observer<Response<List<Hero>>>() {
             @Override
-            public void onChanged(Response<ResponsePojo> responsePojoResponse) {
-                photoAdapter.notifyData(responsePojoResponse.body().getData());
+            public void onChanged(Response<List<Hero>> listResponse) {
+                List<Hero> heroList = listResponse.body();
+                photoAdapter.notifyData((ArrayList<Hero>) heroList);
             }
         });
         mainActivityViewModel.makeApiCall();
